@@ -35,7 +35,6 @@ function Login() {
       setLoginOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
-      console.log(error);
       if (error && error.graphQLErrors[0]?.extensions?.invalidCredentials) {
         setInvalidCredentials(
           error.graphQLErrors[0].extensions.invalidCredentials as string
