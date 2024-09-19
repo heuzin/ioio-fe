@@ -41,7 +41,9 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
     for (const err of graphQLErrors) {
       if (err.extensions?.code === "UNAUTHENTICATED" && retryCount < maxRetry) {
         if (
-          err.extensions.originalError.message === "Refresh token not found"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (err.extensions.originalError as any).message ===
+          "Refresh token not found"
         ) {
           useUserStore.setState({
             id: undefined,
@@ -56,7 +58,8 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
         return new Observable((observer) => {
           refreshToken(client)
             .then((token) => {
-              operation.setContext((previousContext: any) => ({
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              operation.setContext((previousContext: { headers: any }) => ({
                 headers: {
                   ...previousContext.headers,
                   authorization: token,
@@ -86,7 +89,7 @@ export const client = new ApolloClient({
       Query: {
         fields: {
           getCommentsByPostId: {
-            merge(existing, incoming) {
+            merge(_existing, incoming) {
               return incoming;
             },
           },

@@ -11,21 +11,16 @@ import { useMutation } from "@apollo/client";
 function Upload() {
   const fileRef = React.useRef<HTMLInputElement>(null);
 
-  const [show, setShow] = React.useState(false);
-  const [file, setFile] = React.useState<File | null>(null);
   const [fileDisplay, setFileDisplay] = React.useState<string | undefined>(
     undefined
   );
   const [errorType, setErrorType] = React.useState<string | null>(null);
   const [caption, setCaption] = React.useState<string>("");
   const [fileData, setFileData] = React.useState<File | null>(null);
-  const [errors, setErrors] = React.useState<string[]>([]);
-  const [isUploading, setIsUploading] = React.useState<boolean>(false);
 
-  const [createPost, { loading }] = useMutation(CREATE_POST, {
+  const [createPost] = useMutation(CREATE_POST, {
     onError: (err) => {
       console.log(err);
-      setErrors(err.graphQLErrors[0].extensions?.errors as string[]);
     },
     variables: {
       text: caption,
@@ -41,10 +36,7 @@ function Upload() {
   };
   const handleCreatePost = async () => {
     try {
-      setIsUploading(true);
       await createPost();
-      setIsUploading(false);
-      setShow(true);
       clearVideo();
     } catch (err) {
       console.log(err);
@@ -52,7 +44,6 @@ function Upload() {
   };
   const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     setErrorType(null);
-    setFile(e.dataTransfer.files[0]);
 
     const extension = e.dataTransfer.files[0].name.split(".").pop();
     if (extension !== "mp4") {
@@ -64,13 +55,11 @@ function Upload() {
   };
 
   const discard = () => {
-    setFile(null);
     setFileDisplay(undefined);
     setCaption("");
   };
 
   const clearVideo = () => {
-    setFile(null);
     setFileDisplay(undefined);
   };
 

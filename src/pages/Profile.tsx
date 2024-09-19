@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import MainLayout from "../layouts/MainLayout";
 import { BsFillPencilFill } from "react-icons/bs";
 import { AiFillUnlock } from "react-icons/ai";
@@ -13,13 +12,12 @@ import { useUserStore } from "../store/userStore";
 function Profile() {
   // get the user id from the url
   const { id } = useParams<{ id: string }>();
-  const { data, loading, error } = useQuery(GET_POSTS_BY_USER_ID, {
+  const { data } = useQuery(GET_POSTS_BY_USER_ID, {
     variables: {
       userId: Number(id),
     },
   });
   const user = useUserStore((state) => state);
-  const isEditOverlayOpen = useGeneralStore((state) => state.isEditProfileOpen);
   const setIsEditOverlayOpen = useGeneralStore(
     (state) => state.setIsEditProfileOpen
   );

@@ -24,7 +24,7 @@ function Post() {
   const { id } = useParams<{ id: string }>();
   const [comment, setComment] = React.useState<string>("");
   const navigate = useNavigate();
-  const [createComment, { data: commentData }] = useMutation(CREATE_COMMENT, {
+  const [createComment] = useMutation(CREATE_COMMENT, {
     refetchQueries: [
       {
         query: GET_COMMENTS_BY_POST_ID,
@@ -36,14 +36,11 @@ function Post() {
     ],
   });
 
-  const { data, loading: loadingComments } = useQuery<GetCommentsByPostIdQuery>(
-    GET_COMMENTS_BY_POST_ID,
-    {
-      variables: {
-        postId: Number(id),
-      },
-    }
-  );
+  const { data } = useQuery<GetCommentsByPostIdQuery>(GET_COMMENTS_BY_POST_ID, {
+    variables: {
+      postId: Number(id),
+    },
+  });
 
   const [deleteComment] = useMutation(DELETE_COMMENT, {
     update(cache, { data: { deleteComment } }) {
