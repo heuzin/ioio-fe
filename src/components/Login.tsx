@@ -8,8 +8,7 @@ import { useGeneralStore } from "../store/generalStore";
 import { LOGIN_USER } from "../graphql/mutations/Login";
 
 function Login() {
-  const [loginUser, { loading, error, data }] =
-    useMutation<LoginUserMutation>(LOGIN_USER);
+  const [loginUser, { error }] = useMutation<LoginUserMutation>(LOGIN_USER);
   const setUser = useUserStore((state) => state.setUser);
   const setLoginOpen = useGeneralStore((state) => state.setLoginIsOpen);
   const [errors, setErrors] = React.useState<GraphQLErrorExtensions>({});

@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { IoChatbubbleEllipses } from "react-icons/io5";
-import { IoIosShareAlt } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { GetCommentsByPostIdQuery, Post } from "../gql/graphql";
 import { GET_COMMENTS_BY_POST_ID } from "../graphql/queries/GetCommentsByPostId";
@@ -16,12 +15,9 @@ function PostFeed({ post }: { post: Post }) {
     video.current?.play();
   });
 
-  const { data, loading, error } = useQuery<GetCommentsByPostIdQuery>(
-    GET_COMMENTS_BY_POST_ID,
-    {
-      variables: { postId: post.id },
-    }
-  );
+  const { data } = useQuery<GetCommentsByPostIdQuery>(GET_COMMENTS_BY_POST_ID, {
+    variables: { postId: post.id },
+  });
 
   const handleNavigate = () => navigate(`/post/${post.id}`);
 

@@ -7,7 +7,7 @@ import { RegisterUserMutation } from "../gql/graphql";
 import { useUserStore } from "../store/userStore";
 import { useGeneralStore } from "../store/generalStore";
 function Register() {
-  const [registerUser, { loading, error, data }] =
+  const [registerUser, { data }] =
     useMutation<RegisterUserMutation>(REGISTER_USER);
   const setUser = useUserStore((state) => state.setUser);
   const setLoginOpen = useGeneralStore((state) => state.setLoginIsOpen);

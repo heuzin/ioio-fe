@@ -16,10 +16,10 @@ function EditProfileOverlay() {
     string | undefined
   >();
   const [croppedImage, setCroppedImage] = React.useState<string | undefined>();
-  const isEditProfileOpen = useGeneralStore((state) => state.isEditProfileOpen);
+  // const isEditProfileOpen = useGeneralStore((state) => state.isEditProfileOpen);
   const user = useUserStore((state) => state);
-  const [file, setFile] = useState<File | null>(null);
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  // const [file, setFile] = useState<File | null>(null);
+  // const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const setEditProfileIsOpen = useGeneralStore(
     (state) => state.setIsEditProfileOpen
   );
@@ -28,11 +28,11 @@ function EditProfileOverlay() {
     setCroppedImage(undefined);
     if (e.target.files) {
       setUploadedImage(URL.createObjectURL(e.target.files[0]));
-      setFile(e.target.files[0]);
+      // setFile(e.target.files[0]);
     }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const [username, setUsername] = React.useState<string>(user.fullname ?? "");
   const [bio, setBio] = React.useState<string>(user.bio ?? "");
@@ -46,9 +46,9 @@ function EditProfileOverlay() {
   };
   useEffect(() => {
     if (username.length > 0 || bio.length > 0) {
-      setIsUpdated(true);
+      // setIsUpdated(true);
     } else {
-      setIsUpdated(false);
+      // setIsUpdated(false);
     }
   }, [username, bio]);
   const saveCroppedImage = () => {
@@ -119,7 +119,7 @@ function EditProfileOverlay() {
     //   });
   };
 
-  const [updateUserProfile, { data, loading, error }] =
+  const [updateUserProfile] =
     useMutation<UpdateUserProfileMutation>(UPDATE_USER_PROFILE);
 
   const cropAndUpdateImage = async () => {

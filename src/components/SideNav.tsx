@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import MenuItem from "./MenuItem";
-import MenutItemFollow from "./MenuItemSuggested";
 import { useQuery } from "@apollo/client";
-import { GET_USERS } from "../graphql/queries/getUsers";
+import { GET_USERS } from "../graphql/queries/GetUsers";
 import { User } from "../gql/graphql";
 import MenuItemSuggested from "./MenuItemSuggested";
 
 function SideNav() {
-  const { data, loading, fetchMore } = useQuery(GET_USERS, {});
+  const { data } = useQuery(GET_USERS, {});
   const [showAllUsers, setShowAllUsers] = useState(false);
 
   const displayedUsers: User[] = showAllUsers

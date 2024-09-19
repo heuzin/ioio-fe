@@ -6,12 +6,11 @@ import {
   AiOutlineFileSearch,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { BsThreeDotsVertical, BsFillSendFill } from "react-icons/bs";
+import { BsFillSendFill } from "react-icons/bs";
 import { BiMessageDetail } from "react-icons/bi";
 import { GrLogout } from "react-icons/gr";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useMutation } from "@apollo/client";
-import { useLocation } from "react-router-dom";
 import { useGeneralStore } from "../store/generalStore";
 import { useUserStore } from "../store/userStore";
 import { LOGOUT_USER } from "../graphql/mutations/Logout";
@@ -21,8 +20,7 @@ const TopNav = () => {
   const setIsLoginOpen = useGeneralStore((state) => state.setLoginIsOpen);
   const user = useUserStore((state) => state);
   const setUser = useUserStore((state) => state.setUser);
-  const [logoutUser, { loading, error, data }] = useMutation(LOGOUT_USER);
-  const logation = useLocation();
+  const [logoutUser] = useMutation(LOGOUT_USER);
 
   const [showMenu, setShowMenu] = React.useState(false);
 
