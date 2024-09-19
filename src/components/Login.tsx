@@ -8,7 +8,8 @@ import { useGeneralStore } from "../store/generalStore";
 import { LOGIN_USER } from "../graphql/mutations/Login";
 
 function Login() {
-  const [loginUser, { error }] = useMutation<LoginUserMutation>(LOGIN_USER);
+  const [loginUser, { loading, error, data }] =
+    useMutation<LoginUserMutation>(LOGIN_USER);
   const setUser = useUserStore((state) => state.setUser);
   const setLoginOpen = useGeneralStore((state) => state.setLoginIsOpen);
   const [errors, setErrors] = React.useState<GraphQLErrorExtensions>({});
@@ -34,14 +35,15 @@ function Login() {
       setLoginOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
-      if (error && error.graphQLErrors[0].extensions?.invalidCredentials) {
+      console.log(error);
+      if (error && error.graphQLErrors[0]?.extensions?.invalidCredentials) {
         setInvalidCredentials(
           error.graphQLErrors[0].extensions.invalidCredentials as string
         );
       } else {
         if (error) {
           setErrors(
-            error.graphQLErrors[0].extensions as GraphQLErrorExtensions
+            error.graphQLErrors[0]?.extensions as GraphQLErrorExtensions
           );
         }
       }
